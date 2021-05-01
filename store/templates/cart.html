@@ -1,0 +1,37 @@
+{% extends 'main.html' %} 
+{% load static %}
+
+{% block content %}
+    <div class="container my-5">
+        <div class="row" style="color: hsl(0 0 80%); background-color: silver;">
+            <div class="col mx-3 my-5"><p class="h1">Item|</p></div>
+            <div class="col mx-5 my-5" style="text-align: end;"><p class="h1">Quantity|</p></div>
+            <div class="col mx-4 my-5"style="text-align: end;"><p class="h1">Price|</p></div>
+            <div class="col mx-2 my-5" style="text-align: end;"><p class="h1">Total| (total)</p></div>
+            <div class="col my-5" style="text-align: end;">
+                <a href="{% url 'checkout' %}">
+                    <button type="button" class="btn btn-success">Checkout</button>
+                </a>
+            </div>
+        </div>
+        <div class="row my-5">
+            <div class="col"><img style="height: 100px;" src="{% static 'img/placeholder.png' %}"></div>
+            <div class="col" style="text-align: start;">
+                <div class="col">
+                    Quantity
+                </div>
+                <div class="row mb-2 justify-content-center">
+                    <img src="{% static 'img/arrow-up.png' %}" style="width: 50px; height: 40px;">
+                </div>
+                <div class="row mt-2 justify-content-center">
+                    <img src="{% static 'img/arrow-down.png' %}" style="width: 50px; height: 40px;">
+                </div>
+            </div>
+            <div class="col" style="text-align: start;">Price</div>
+            <div class="col" style="text-align: start;">Total</div>
+        </div>
+    </div>
+    
+
+
+{% endblock %}
