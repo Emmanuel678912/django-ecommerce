@@ -1,1 +1,1 @@
-add web: gunicorn rundumustore.wsgi
+web: gunicorn rundumustore.wsgi
