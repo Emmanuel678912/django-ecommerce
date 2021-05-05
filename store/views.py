@@ -1,11 +1,15 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.models import Group, User, Permission
 from django.contrib.auth import authenticate, login, logout
-from .models import Customer
+from .models import Customer, Product
 
 # Create your views here.
 def store(request):
-    context = {}
+    products = Product.objects.all()
+    print(products)
+
+    context = {'products' : products}
+    
     return render(request, 'store.html', context)
 
 def checkout(request):
@@ -88,3 +92,12 @@ def logout_view(request):
         return redirect('/')
     
     return render(request, 'logout.html', {})
+
+def product(request, slug, id):
+    item = Product.objects.get(id=id)
+
+    products = Product.objects.filter(id=id)
+
+    context = {'products' : products}
+
+    return render(request, 'product.html', context)

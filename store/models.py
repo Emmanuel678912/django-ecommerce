@@ -22,12 +22,22 @@ class Product(models.Model):
 
     name = models.CharField(max_length=200)
     price = models.DecimalField(max_digits=5, decimal_places=2)
+    desc = models.CharField(max_length=500)
     category = models.CharField(choices=CATEGORY_CHOICES, max_length=2)
     digital = models.BooleanField(default=False, null=True, blank=True)
+    slug = models.CharField(max_length=80)
     image = models.ImageField(null=True, blank=True)
 
     def __str__(self):
         return self.name
+
+    @property # allows access to function as attribute instead of method
+    def imageURL(self): # tests if url exists if not returns an empty string
+        try:
+            url = self.image.url 
+        except:
+            url = ''    
+        return url 
 
 class Order(models.Model):
     customer = models.ForeignKey(Customer, on_delete=models.SET_NULL, null=True, blank=True)

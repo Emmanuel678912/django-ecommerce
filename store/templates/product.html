@@ -1,0 +1,32 @@
+{% extends 'main.html' %}
+{% load static %}
+
+{% block content %}
+    <div class="container">
+        {% for product in products %}
+            <div class="row my-5">
+                <div class="col justify-content-end">
+                    <a href="{% url 'cart' %}">
+                        <button type="button" class="btn btn-outline-success btn-sm" style="margin-left: 90%">Add To Cart</button>
+                    </a> 
+                </div> 
+            </div>
+            <div class="row my-5">
+                <div class="col">
+                    <h1>{{product.name}}</h1>
+                </div>
+            </div>
+            <div class="row my-5">
+                <div class="col">
+                    <img class="img img-fluid" src="{{product.imageURL}}">
+                </div>
+                <div class="col" style="text-align: center;">
+                    <p class="h1">Description</p>
+                    {{product.desc}}
+                </div>
+            </div>
+                
+        {% endfor %}
+    </div>
+
+{% endblock %}
