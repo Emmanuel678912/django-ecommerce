@@ -1,14 +1,15 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.models import Group, User, Permission
 from django.contrib.auth import authenticate, login, logout
-from .models import Customer, Product
+from .models import Customer, Product, Category
 
 # Create your views here.
 def store(request):
     products = Product.objects.all()
-    print(products)
 
-    context = {'products' : products}
+    categories = Category.objects.all()
+
+    context = {'products' : products, 'categories' : categories}
     
     return render(request, 'store.html', context)
 
@@ -73,8 +74,6 @@ def register(request):
         customer.email = email
         customer.password = password
         customer.save()
-        # adds new user to customer group
-        #customers.user_set.add(user)
 
         # saves user data
         user.save()
@@ -98,6 +97,16 @@ def product(request, slug, id):
 
     products = Product.objects.filter(id=id)
 
-    context = {'products' : products}
+
+    context = {'products' : products, 'item' : item}
 
     return render(request, 'product.html', context)
+
+
+def category_page(request, slug, id):
+    category = Category.objects.get(id=id)
+
+    products = Product.objects.filter(category=category)
+
+    context = {'category' : category, 'products': products}
+    return render(request, 'category-page.html', context)

@@ -14,19 +14,23 @@ class Customer(models.Model):
     def __str__(self):
         return self.email
 
-class Product(models.Model):
-    CATEGORY_CHOICES = (
-        ('G', 'GAMES'),
-        ('M', 'MERCH'),
-    )
+class Category(models.Model):
+    name = models.CharField(max_length=200)
+    slug = models.CharField(max_length=80)
+    image = models.ImageField(null=True, blank=True, upload_to='media/category-images')
 
+    def __str__(self):
+        return self.name
+
+class Product(models.Model):
     name = models.CharField(max_length=200)
     price = models.DecimalField(max_digits=5, decimal_places=2)
     desc = models.CharField(max_length=500)
-    category = models.CharField(choices=CATEGORY_CHOICES, max_length=2)
+    category = models.ForeignKey(Category, on_delete=models.CASCADE)
+    # category = models.CharField(choices=CATEGORY_CHOICES, max_length=2)
     digital = models.BooleanField(default=False, null=True, blank=True)
     slug = models.CharField(max_length=80)
-    image = models.ImageField(null=True, blank=True)
+    image = models.ImageField(null=True, blank=True, upload_to='media/product-images')
 
     def __str__(self):
         return self.name
