@@ -48,8 +48,8 @@
                                 <p class="h2">{{product.name}}</p>
                                 Lorem ipsum dolor sit amet, consectetur adipisicing elit.
                                 <p><strong>$ {{product.price}}</strong></p>
-                                <a href="{% url 'cart' %}">
-                                    <button type="button" class="btn btn-outline-success btn-sm">Add To Cart</button>
+                                <a href="#">
+                                    <button data-product={{product.id}} data-action="add" type="button" class="btn btn-outline-success btn-sm update-cart">Add To Cart</button>
                                 </a>      
                             </div>
                         </div>

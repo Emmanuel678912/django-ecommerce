@@ -14,7 +14,9 @@ urlpatterns = [
     path('register/', views.register, name='register'),
     path('logout/', views.logout_view, name='logout'), 
     path('product/<str:slug>/<int:id>/', views.product, name='product'), 
-    path('category/<str:slug>/<int:id>/', views.category_page, name='category-page'), 
+    path('category/<str:slug>/<int:id>/', views.category_page, name='category-page'),
+    path('update_item/', views.update_item, name='update_item'),
+
 ]    
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
