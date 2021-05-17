@@ -3,8 +3,12 @@ from django.contrib.auth.models import Group, User, Permission
 from django.contrib.auth import authenticate, login, logout
 from .models import Customer, Product, Category, Order, OrderItem, ShippingAddress
 from .utils import cookieCart, cartData, guestOrder
+
 import json
+import stripe
 import datetime
+
+stripe.api_key = 'sk_test_51Is68OHUBFVHtJtvnrO0FPh2qDj3P6mwAWkXRp1K5LrYwFQbqNXiFy5QwshdV8m9uH4dW3GgGLBEKW4PbQY4xPRj008bezrDkC'
 
 from django.http import JsonResponse
 
@@ -32,7 +36,6 @@ def checkout(request):
 
     context = {'items' : items, 'cartItems' : cartItems, 'order' : order}
     return render(request, 'checkout.html', context)
-
 
 def cart(request):
 
@@ -163,7 +166,6 @@ def product(request, slug, id):
 
     return render(request, 'product.html', context)
 
-
 def category_page(request, slug, id):
     category = Category.objects.get(id=id)
 
@@ -181,7 +183,6 @@ def category_page(request, slug, id):
 
     context = {'category' : category, 'products': products}
     return render(request, 'category-page.html', context)
-
 
 def update_item(request):
     
@@ -229,6 +230,22 @@ def processOrder(request):
         order.complete = True
     order.save()
 
+    source = data['source']['source']
+
+    customer = stripe.Customer.create( # this creates a customer on stripe
+        email=request.user.customer.email,
+        name=request.user.customer.first_name,
+        source=source
+    )
+
+    
+
+    charge = stripe.Charge.create( # this creates a charge on stripe
+        customer=customer,
+        amount=int(total * 100),
+        currency="usd",
+        description=str(order.transaction_id)
+    )
     
     if order.shipping == True:
         try:
@@ -244,3 +261,23 @@ def processOrder(request):
             pass
         
     return JsonResponse('Payment submitted...', safe=False)
+
+def accounts(request, id):
+
+    user = Customer.objects.get(id=id)
+
+    customer = request.user.customer
+
+    order = Order.objects.get(customer=user)
+
+    print(order)
+
+    orders = OrderItem.objects.select_related('order__customer')
+
+    orderItems = OrderItem.objects.all()
+
+
+
+    context = {'user' : user, 'customer' : customer, 'orders' : orders, 'orderItems' : orderItems}
+
+    return render(request, 'accounts.html', context)
