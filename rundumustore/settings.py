@@ -29,7 +29,7 @@ SECRET_KEY = 'django-insecure-i$iwfb#rsjod7x4!oqx0z#e*80qngyhj#ot%e$21+hnpwc3!9_
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['localhost:8000', 'rundumustore.herokuapp.com']
 
 
 # Application definition
@@ -148,3 +148,6 @@ MEDIA_URL = '/images/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 django_heroku.settings(locals())
+
+if os.getcwd() == '/app':
+    DEBUG=False
