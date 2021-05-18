@@ -1,0 +1,51 @@
+{% extends 'main.html' %}
+{% load static %}
+
+
+{% block content %}
+    {% if request.user.is_authenticated %}
+    <div class="container">
+      <p class="h1">
+        You have already registered.
+      </p>
+    </div>
+    {% else %}
+    <div class="container mt-5" style="margin-bottom: 50%;">
+        <div class="row">
+            <div class="col">
+                <form method='POST'>
+                  {% csrf_token %}
+                    <div class="mb-3">
+                        <label for="exampleInputPassword1" class="form-label">First Name</label>
+                        <input type="text" class="form-control" id="exampleInputPassword1" name="name">
+                      </div>
+                      <div class="mb-3">
+                        <label for="exampleInputPassword1" class="form-label">Last Name</label>
+                        <input type="text" class="form-control" id="exampleInputPassword1" name="last">
+                      </div>
+                    <div class="mb-3">
+                      <label for="exampleInputEmail1" class="form-label">Email address</label>
+                      <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" name="email">
+                    </div>
+                    <div class="mb-3">
+                        <label for="exampleInputPassword1" class="form-label">Password</label>
+                        <input type="password" class="form-control" id="exampleInputPassword1" name="password">
+                    </div>
+                    <div class="mb-3">
+                        <label for="exampleInputPassword1" class="form-label">Confirm Password</label>
+                        <input type="password" class="form-control" id="exampleInputPassword1">
+                    </div>
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                  </form>
+            </div>
+        </div>
+        <div class="row">
+          <p>Already have an account? <a href="{% url 'login' %}">Login</a></p>
+        </div>
+    </div>
+    {% endif %}
+
+
+{% endblock %}
+
+

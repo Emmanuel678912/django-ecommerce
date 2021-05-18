@@ -1,0 +1,23 @@
+{% extends 'main.html' %}
+{% load static %}
+
+{% block content %}
+    <div class="container-fluid" style="background-color: grey;">
+        {% for product in products %}
+            <div class="row">
+                <div class="row my-5">
+                    {{product.name}}
+                    <div class="col justify-content-end" style="background-color: purple; align-items-end">
+                        {{product.price}}
+                    </div>
+                </div>
+                <div class="row my-5">
+                    {{product.desc}}
+                </div>
+            </div>
+
+        {% endfor %}
+    </div>
+
+
+{% endblock %}
