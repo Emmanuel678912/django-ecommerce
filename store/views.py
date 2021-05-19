@@ -24,7 +24,7 @@ def store(request):
         
     context = {'products' : products, 'categories' : categories, 'cartItems' : cartItems}
     
-    return render(request, 'store.html', context)
+    return render(request, 'templates/store.html', context)
 
 def checkout(request):
     
@@ -35,7 +35,7 @@ def checkout(request):
     items = data['items']
 
     context = {'items' : items, 'cartItems' : cartItems, 'order' : order}
-    return render(request, 'checkout.html', context)
+    return render(request, 'templates/checkout.html', context)
 
 def cart(request):
 
@@ -47,7 +47,7 @@ def cart(request):
         
 
     context = {'items' : items, 'order' : order}
-    return render(request, 'cart.html', context)
+    return render(request, 'templates/cart.html', context)
 
 def contact(request):
     if request.user.is_authenticated:
@@ -59,7 +59,7 @@ def contact(request):
         items = []
         order = {'get_cart_total' : 0, 'get_cart_items' : 0}
         cartItems = order['get_cart_items']
-    return render(request, 'contact.html', {})
+    return render(request, 'templates/contact.html', {})
 
 def loginview(request):
     context = {}
@@ -89,7 +89,7 @@ def loginview(request):
         order = {'get_cart_total' : 0, 'get_cart_items' : 0}
         cartItems = order['get_cart_items']
 
-    return render(request, 'login.html', context)
+    return render(request, 'templates/login.html', context)
 
 def register(request):
 
@@ -136,7 +136,7 @@ def register(request):
         return redirect('login')
 
     context = {}
-    return render(request, 'register.html', context)
+    return render(request, 'templates/register.html', context)
 
 def logout_view(request):
     # check if user is logged in when logout button is pressed
@@ -145,7 +145,7 @@ def logout_view(request):
         logout(request)
         return redirect('/')
     
-    return render(request, 'logout.html', {})
+    return render(request, 'templates/logout.html', {})
 
 def product(request, slug, id):
     item = Product.objects.get(id=id)
@@ -164,7 +164,7 @@ def product(request, slug, id):
 
     context = {'products' : products, 'item' : item}
 
-    return render(request, 'product.html', context)
+    return render(request, 'templates/product.html', context)
 
 def category_page(request, slug, id):
     category = Category.objects.get(id=id)
@@ -182,7 +182,7 @@ def category_page(request, slug, id):
         cartItems = order['get_cart_items']
 
     context = {'category' : category, 'products': products}
-    return render(request, 'category-page.html', context)
+    return render(request, 'templates/category-page.html', context)
 
 def update_item(request):
     
@@ -280,4 +280,4 @@ def accounts(request, id):
 
     context = {'user' : user, 'customer' : customer, 'orders' : orders, 'orderItems' : orderItems}
 
-    return render(request, 'accounts.html', context)
+    return render(request, 'templates/accounts.html', context)

@@ -65,77 +65,71 @@
       </button>
 
 
-        <div class="col">
-            <form class="d-flex" style="align-self: end">
-                  <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                  <button class="btn btn-outline-success" type="submit">Search</button>
-                </form>
-          </div>
-          
-          <div class="col">
-              <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                  <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                    <li class="nav-item">
-                      <a class="nav-link" aria-current="page" href="{% url 'register' %}">Register</a>
-                    </li>
-                    <li class="nav-item">
-                      <a class="nav-link" href="{% url 'login' %}">Login</a>
-                    </li>
-                    <li class="nav-item">
-                      <a class="nav-link" href="{% url 'logout' %}">Logout</a>
-                    </li>
-                    <li class="nav-item dropdown">
-                      <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        Account
-                      </a>
-                      <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <li><a class="dropdown-item" href="#">Action</a></li>
-                        <li><a class="dropdown-item" href="#">Another action</a></li>
-                        <li><hr class="dropdown-divider"></li>
-                        <li><a class="dropdown-item" href="#">Something else here</a></li>
-                      </ul>
-                    </li>
-                    <!-- <li class="nav-item">
-                      <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
-                    </li> -->
-                      </ul>
-                  </div>
-          </div>
+        <!-- <div class="col""> -->
+      <form class="d-flex" style="align-self: end my-2">
+        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+        <button class="btn btn-outline-success" type="submit">Search</button>
+      </form>
+          <!-- </div> -->
 
-          <!--<div class="col">
-              <img src="{% static 'img/cart.png' %}" style="height: 50px; width: 50px;">
-          </div>-->
-        </div>
+        <div class="my-2 " id="navbarSupportedContent">
+            <ul class="navbar-nav">
+              
+              {% if request.user.is_authenticated %}
+                <li class="nav-item">
+                  <a class="nav-link" href="{% url 'logout' %}">Logout</a>
+                </li>
+                <li class="nav-item">
+                  <span style="background-color: green; 
+                  color: white; 
+                  border-radius: 50%; 
+                  width: 20px; 
+                  text-align: center;
+                  display:block;
+                  transform:translateX(500%);
+                  transform:translateY(-250%);">{{cartItems}}</span>
+                  <a class="nav-link" href="{% url 'cart' %}">
+                    <img style="width: 50px; margin-top: -10px; display:inline-block;"src="{% static 'media/img/cart.png' %}">
+                  </a>     
+                </li>
+                  
+              {% else %}
+                <li class="nav-item">
+                  <a class="nav-link" aria-current="page" href="{% url 'register' %}">Register</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="{% url 'login' %}">Login</a>
+                </li>
+              {% endif %}
+              
+              <!-- <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                  Account
+                </a>
+                <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                  <li><a class="dropdown-item" href="#">Action</a></li>
+                  <li><a class="dropdown-item" href="#">Another action</a></li>
+                  <li><hr class="dropdown-divider"></li>
+                  <li><a class="dropdown-item" href="#">Something else here</a></li>
+                </ul>
+              </li> -->
+              <!-- <li class="nav-item">
+                <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
+              </li> -->
+            </ul>
+        <!-- </div>   -->
+          
+
+      <!--<div class="col">
+          <img src="{% static 'img/cart.png' %}" style="height: 50px; width: 50px;">-->
       </div>
+    </div>
+  </div>
   </nav>
 
-  <div class="container my-5">
-    <div class="row">
-      
-    </div>
-    <div class="row">
-      <nav class="col-md-2 d-none d-sm-block bg-light sidebar align-items-end">
-        <div class="sidebar-sticky">
-          <ul class="nav flex-column">
-            {% for category in categories %}
-              <li class="nav-item">
-                <a href="category/{{category.slug}}/{{category.id}}">{{category.name}}</a>
-              </li>
-            {% endfor %}
-        </div>
-      </nav>
+  {% block content %}
   
-      <div class="col">
-        {% block content %}
-  
-  
-  
-        {% endblock %}
-      </div>
-    </div>
-    
-  </div>
-    
+  {% endblock %}
     
  
     
@@ -150,18 +144,17 @@
           <div class="col">
             About Us
           </div>
-          <div class="col">k</div>
-          <div class="col">l</div>
       </div>
       <div class="row">
         <div class="col">
-          Category Links
+          {% for cat in categories %}
+            <a href="#">{{cat.name}}</a>
+            <br>
+          {% endfor %}
         </div>
         <div class="col">
           Lorem ipsum dolor sit amet consectetur adipisicing elit.
         </div>
-        <div class="col"></div>
-        <div class="col"></div>
       </div>
     </div>
   </footer>
