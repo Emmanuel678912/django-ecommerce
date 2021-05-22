@@ -1,6 +1,5 @@
 var updateBtns = document.getElementsByClassName('update-cart')
 
-
 for (i = 0; i < updateBtns.length; i++) {
     updateBtns[i].addEventListener('click', function(){
         var productId = this.dataset.product
@@ -29,7 +28,7 @@ function addCookieItem(productId, action) {
 
     if (action == 'remove'){
         cart[productId]['quantity'] -= 1
-        
+
         if (cart[productId]['quantity'] <= 0){
             this.state.quantity = 0
             console.log('Item should be deleted.')

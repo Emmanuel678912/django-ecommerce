@@ -115,7 +115,7 @@
     
     <hr class="mb-4">
     
-    <form action="{% url 'store' %}" method="POST" id=payment-form style="display: none;">
+    <!-- <form action="{% url 'store' %}" method="POST" id=payment-form style="display: none;">
         {% csrf_token %}
         <div class="form-row">
             <label for="card-element">
@@ -123,16 +123,16 @@
             </label>
             <div id="card-element">
                 <!-- A stripe element will be inserted here --->
-            </div>
+            <!-- </div> -->
                 <!-- Use to display form errors. -->
-            <div id="card-errors" role="alert"></div>
-        </div>
+            <!-- <div id="card-errors" role="alert"></div> -->
+        <!-- </div> -->
 
-        <button> Submit Payment</button>
+        <!-- <button> Submit Payment</button> -->
 
-    </form>
+    <!-- </form> -->
 
-    <h4 class="mb-3">Payment Info</h4> -->
+    <h4 class="mb-3">Payment Info</h4>
     <form class="form payment" id="payment-info" style="display:none">
         <div class="d-block my-3">
             <div class="custom-control custom-radio">
@@ -188,7 +188,7 @@
 </div>
 
 <!-- Include the PayPal JavaScript SDK -->
-<script src="https://www.paypal.com/sdk/js?client-id=AalRNK8x4JySSrTLqfgL3dkhb2zzrXbXX7sorpQZ-xoYhCkjGQcnmNP4iysERgrJET2PClATFOiJIQQD&currency=USD&disable-funding=credit"></script>
+<script src="https://www.paypal.com/sdk/js?client-id=test&currency=USD&disable-funding=credit" data-namespace="paypal_sdk"></script>
 
 <!-- add this in main.html -->
 <!-- <script src="https://js.stripe.com/v3/"></script> -->
@@ -198,35 +198,33 @@
 <!-- <script src="https://www.paypal.com/sdk/js?client-id=AZUMR9OF4No-FBN67l4tlpWtZ7fGDpfMtBGBvDtZXFRrifal7ySWa5F_89WiXv--cuaQAw2hu3dhp6kD&currency=USD&disable-funding=credit"></script> -->
 
 <script>
-    var total = '{{order.get_cart_total}}'
-    // Render the PayPal button into #paypal-button-container
-    paypal.Buttons({
-        
-        style: {
-            color: 'silver',
-            shape: 'pill'
-        },
 
-        // Set up the transaction
-        createOrder: function(data, actions) {
-            return actions.order.create({
-                purchase_units: [{
-                    amount: {
-                        value:parseFloat(total).toFixed(2)
-                    }
-                }]
-            });
-        },
+  var total = '{{order.get_cart_total}}'
 
-        // Finalize the transaction
-        onApprove: function(data, actions) {
-            return actions.order.capture().then(function(details) {
-                submitFormData()
-            });
-        }
+  // Render the PayPal button into #paypal-button-container
+  paypal_sdk.Buttons({
+
+      // Set up the transaction
+      createOrder: function(data, actions) {
+          return actions.order.create({
+              purchase_units: [{
+                  amount: {
+                      value: parseFloat(total).toFixed(2)
+                  }
+              }]
+          });
+      },
+
+      // Finalize the transaction
+      onApprove: function(data, actions) {
+          return actions.order.capture().then(function(details) {
+              // Show a success message to the buyer
+              alert('Transaction completed by ' + details.payer.name.given_name + '!');
+          });
+      }
 
 
-    }).render('#paypal-button-container');
+  }).render('#paypal-button-container');
 </script>
 
 <!-- <script>
@@ -392,7 +390,7 @@
     }
     
     function showPayment(){
-        var paymentInfo = document.getElementById('payment-form')
+        var paymentInfo = document.getElementById('payment-info')
         if (paymentInfo.style.display === 'none') {
             paymentInfo.style.display = 'block';
         }else {
