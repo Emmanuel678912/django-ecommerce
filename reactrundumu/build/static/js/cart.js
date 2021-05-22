@@ -1,4 +1,30 @@
+import React from 'react';
+
+
+class Quantity extends React.Component {
+    constructor() {
+        super()
+        this.addCookieItem = this.addCookieItem.bind(this)
+        this.updateUserOrder = this.updateUserOrder.bind(this)
+    }
+
+    state = {
+        quantity : 0
+    }
+    render() { 
+        return (
+            <>
+                <span className="badge badge-secondary badge-sm m-2">{this.state.quantity}</span>
+            </>
+         );
+    }
+}
+ 
+export default Quantity;
+
+
 var updateBtns = document.getElementsByClassName('update-cart')
+
 
 for (i = 0; i < updateBtns.length; i++) {
     updateBtns[i].addEventListener('click', function(){
@@ -21,15 +47,19 @@ function addCookieItem(productId, action) {
     if (action == 'add'){
         if (cart[productId] == undefined){
             cart[productId] = {'quantity' : 1}
+            this.state.quantity = 1
         }else{
             cart[productId]['quantity'] += 1
+            this.state.quantity += 1
         }
     }
 
     if (action == 'remove'){
         cart[productId]['quantity'] -= 1
+        this.state.quantity -= 1
 
         if (cart[productId]['quantity'] <= 0){
+            this.state.quantity = 0
             console.log('Item should be deleted.')
             delete cart[productId];
         }
