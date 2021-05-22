@@ -1,4 +1,4 @@
-{% extends 'templates/main.html' %} 
+{% extends 'main.html' %} 
 {% load static %}
 
 {% block content %}
@@ -20,6 +20,7 @@
                 <div class="col"><img style="height: 100px;" src="{{item.product.imageURL}}"></div>
                 <div class="col" style="text-align: start;">
                     <div class="col change-quantity">
+                        {{item.quantity}}
                     </div>
                     <div class="row mb-2 justify-content-center">
                         <img data-product={{item.product.id}} data-action="add" class="update-cart chg-quantity"src="{% static 'img/arrow-up.png' %}" style="width: 50px; height: 40px;">

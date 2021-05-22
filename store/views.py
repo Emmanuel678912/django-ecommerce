@@ -5,10 +5,10 @@ from .models import Customer, Product, Category, Order, OrderItem, ShippingAddre
 from .utils import cookieCart, cartData, guestOrder
 
 import json
-import stripe
+# import stripe
 import datetime
 
-stripe.api_key = 'sk_test_51Is68OHUBFVHtJtvnrO0FPh2qDj3P6mwAWkXRp1K5LrYwFQbqNXiFy5QwshdV8m9uH4dW3GgGLBEKW4PbQY4xPRj008bezrDkC'
+# stripe.api_key = 'sk_test_51Is68OHUBFVHtJtvnrO0FPh2qDj3P6mwAWkXRp1K5LrYwFQbqNXiFy5QwshdV8m9uH4dW3GgGLBEKW4PbQY4xPRj008bezrDkC'
 
 from django.http import JsonResponse
 
@@ -24,7 +24,7 @@ def store(request):
         
     context = {'products' : products, 'categories' : categories, 'cartItems' : cartItems}
     
-    return render(request, 'templates/store.html', context)
+    return render(request, 'store.html', context)
 
 def checkout(request):
     
@@ -35,7 +35,7 @@ def checkout(request):
     items = data['items']
 
     context = {'items' : items, 'cartItems' : cartItems, 'order' : order}
-    return render(request, 'templates/checkout.html', context)
+    return render(request, 'checkout.html', context)
 
 def cart(request):
 
@@ -47,7 +47,7 @@ def cart(request):
         
 
     context = {'items' : items, 'order' : order}
-    return render(request, 'templates/cart.html', context)
+    return render(request, 'cart.html', context)
 
 def contact(request):
     if request.user.is_authenticated:
@@ -59,7 +59,7 @@ def contact(request):
         items = []
         order = {'get_cart_total' : 0, 'get_cart_items' : 0}
         cartItems = order['get_cart_items']
-    return render(request, 'templates/contact.html', {})
+    return render(request, 'contact.html', {})
 
 def loginview(request):
     context = {}
@@ -89,7 +89,7 @@ def loginview(request):
         order = {'get_cart_total' : 0, 'get_cart_items' : 0}
         cartItems = order['get_cart_items']
 
-    return render(request, 'templates/login.html', context)
+    return render(request, 'login.html', context)
 
 def register(request):
 
@@ -136,7 +136,7 @@ def register(request):
         return redirect('login')
 
     context = {}
-    return render(request, 'templates/register.html', context)
+    return render(request, 'register.html', context)
 
 def logout_view(request):
     # check if user is logged in when logout button is pressed
@@ -145,7 +145,7 @@ def logout_view(request):
         logout(request)
         return redirect('/')
     
-    return render(request, 'templates/logout.html', {})
+    return render(request, 'logout.html', {})
 
 def product(request, slug, id):
     item = Product.objects.get(id=id)
@@ -164,7 +164,7 @@ def product(request, slug, id):
 
     context = {'products' : products, 'item' : item}
 
-    return render(request, 'templates/product.html', context)
+    return render(request, 'product.html', context)
 
 def category_page(request, slug, id):
     category = Category.objects.get(id=id)
@@ -182,7 +182,7 @@ def category_page(request, slug, id):
         cartItems = order['get_cart_items']
 
     context = {'category' : category, 'products': products}
-    return render(request, 'templates/category-page.html', context)
+    return render(request, 'category-page.html', context)
 
 def update_item(request):
     
@@ -230,22 +230,22 @@ def processOrder(request):
         order.complete = True
     order.save()
 
-    source = data['source']['source']
+    # source = data['source']['source']
 
-    customer = stripe.Customer.create( # this creates a customer on stripe
-        email=request.user.customer.email,
-        name=request.user.customer.first_name,
-        source=source
-    )
+    # customer = stripe.Customer.create( # this creates a customer on stripe
+    #     email=request.user.customer.email,
+    #     name=request.user.customer.first_name,
+    #     source=source
+    # )
 
     
 
-    charge = stripe.Charge.create( # this creates a charge on stripe
-        customer=customer,
-        amount=int(total * 100),
-        currency="usd",
-        description=str(order.transaction_id)
-    )
+    # charge = stripe.Charge.create( # this creates a charge on stripe
+    #     customer=customer,
+    #     amount=int(total * 100),
+    #     currency="usd",
+    #     description=str(order.transaction_id)
+    # )
     
     if order.shipping == True:
         try:
@@ -280,4 +280,4 @@ def accounts(request, id):
 
     context = {'user' : user, 'customer' : customer, 'orders' : orders, 'orderItems' : orderItems}
 
-    return render(request, 'templates/accounts.html', context)
+    return render(request, 'accounts.html', context)

@@ -81,16 +81,13 @@
                   <a class="nav-link" href="{% url 'logout' %}">Logout</a>
                 </li>
                 <li class="nav-item">
-                  <span style="background-color: green; 
-                  color: white; 
-                  border-radius: 50%; 
-                  width: 20px; 
-                  text-align: center;
-                  display:block;
-                  transform:translateX(500%);
-                  transform:translateY(-250%);">{{cartItems}}</span>
                   <a class="nav-link" href="{% url 'cart' %}">
-                    <img style="width: 50px; margin-top: -10px; display:inline-block;"src="{% static 'media/img/cart.png' %}">
+                    <span style="background-color: green; 
+                                color: white; 
+                                border-radius: 50%; 
+                                width: 20px; 
+                                text-align: center;
+                                display:block;">{{cartItems}}</span>                  
                   </a>     
                 </li>
                   
@@ -101,6 +98,16 @@
                 <li class="nav-item">
                   <a class="nav-link" href="{% url 'login' %}">Login</a>
                 </li>
+                <li class="nav-item">
+                <a class="nav-link" href="{% url 'cart' %}">
+                  <span style="background-color: green; 
+                              color: white; 
+                              border-radius: 50%; 
+                              width: 20px; 
+                              text-align: center;
+                              display:block;">{{cartItems}}</span>                  
+                </a>     
+              </li>
               {% endif %}
               
               <!-- <li class="nav-item dropdown">
@@ -132,11 +139,15 @@
   
   {% endblock %}
     
- 
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
     
 
     
-  <footer class="footer mt-auto mb-auto py-3 bg-dark">
+  <footer class="footer py-3 bg-dark" style="margin-bottom: 0%;">
     <div class="container" style="color: white;">
       <div class="row">
           <div class="col">
@@ -167,15 +178,6 @@
     <script type="text/javascript" src="{% static 'js/cart.js' %}"></script>
 
     <!-- React -->
-    <script src="https://unpkg.com/react@17/umd/react.production.min.js" crossorigin></script>
-    <script src="https://unpkg.com/react-dom@17/umd/react-dom.production.min.js" crossorigin></script>
-    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
-    
-    <script type="text/babel">
-      ReactDOM.render(
-        <Quantity />, document.getElementsByID('change-quantity')
-      )
-    </script>
 </body>
 </html>
  
