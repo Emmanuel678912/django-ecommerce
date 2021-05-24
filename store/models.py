@@ -22,6 +22,13 @@ class Category(models.Model):
     def __str__(self):
         return self.name
 
+    def categoryURL(self):
+        try:
+            url = self.request.url
+        except:
+            url = ''
+        return url
+
 class Product(models.Model):
     name = models.CharField(max_length=200)
     price = models.DecimalField(max_digits=5, decimal_places=2)
@@ -41,7 +48,15 @@ class Product(models.Model):
             url = self.image.url 
         except:
             url = ''    
-        return url 
+        return url
+    
+    @property
+    def getURL(self):
+        try: 
+            url = str(self.request.url)
+        except:
+            url = ''
+        return url
 
 class Order(models.Model):
     customer = models.ForeignKey(Customer, on_delete=models.SET_NULL, null=True, blank=True)

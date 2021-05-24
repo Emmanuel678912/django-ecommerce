@@ -2,24 +2,32 @@
 {% load static %}
 
 {% block content %}
-    <div class="container-fluid" style="background-color: grey;">
+    <div class="container">
+        
         {% for product in products %}
-            <div class="row">
-                <div class="row my-5">
-                    {{product.name}}
-                    <div class="col justify-content-end" style="background-color: purple; align-items: end;">
-                        {{product.price}}
+            <div class="card my-3">
+                <div class="card-title">
+                    <p class="h5 m-2">
+                        <a href="{{product.getURL}}/product/{{product.slug}}/{{product.id}}">
+                                {{product.name}}
+                        </a> - ${{product.price}}
+                    </p>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col">
+                            <img class="img" src="{{product.imageURL}}" style="width: 200px;">
+                        </div>
+                        <div class="col">
+                            {{product.desc}}
+                        </div>
                     </div>
-                </div>
-                <div class="row my-5">
-                    {{product.desc}}
-                </div>
+                </div>   
             </div>
-
         {% endfor %}
     </div>
 
-    <br>
+  <br>
   <br>
   <br>
   <br>

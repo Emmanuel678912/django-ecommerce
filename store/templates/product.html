@@ -2,7 +2,8 @@
 {% load static %}
 
 {% block content %}
-    {% if item %}
+    <div class="container my-5">
+        {% if item %}
         <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
             <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="#">Home</a></li>
@@ -10,6 +11,8 @@
             </ol>
         </nav>
     {% endif %}
+    </div>
+
 
     <div class="container">
         {% for product in products %}

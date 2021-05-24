@@ -28,16 +28,20 @@ def store(request):
 
 def checkout(request):
     
+    categories = Category.objects.all()
+
     data = cartData(request)
 
     cartItems = data['cartItems']
     order = data['order']
     items = data['items']
 
-    context = {'items' : items, 'cartItems' : cartItems, 'order' : order}
+    context = {'items' : items, 'cartItems' : cartItems, 'order' : order, 'categories' : categories}
     return render(request, 'checkout.html', context)
 
 def cart(request):
+    
+    categories = Category.objects.all()
 
     data = cartData(request)
 
@@ -46,10 +50,13 @@ def cart(request):
     items = data['items']
         
 
-    context = {'items' : items, 'order' : order}
+    context = {'items' : items, 'order' : order, 'categories' : categories}
     return render(request, 'cart.html', context)
 
 def contact(request):
+
+    categories = Category.objects.all()
+
     if request.user.is_authenticated:
         customer = request.user.customer
         order, created = Order.objects.get_or_create(customer=customer, complete=False)
@@ -59,9 +66,12 @@ def contact(request):
         items = []
         order = {'get_cart_total' : 0, 'get_cart_items' : 0}
         cartItems = order['get_cart_items']
+    
+
     return render(request, 'contact.html', {})
 
 def loginview(request):
+
     context = {}
 
     if request.method == 'POST':
@@ -152,6 +162,8 @@ def product(request, slug, id):
 
     products = Product.objects.filter(id=id)
 
+    categories = Category.objects.all()
+
     if request.user.is_authenticated:
         customer = request.user.customer
         order, created = Order.objects.get_or_create(customer=customer, complete=False)
@@ -162,7 +174,7 @@ def product(request, slug, id):
         order = {'get_cart_total' : 0, 'get_cart_items' : 0}
         cartItems = order['get_cart_items']
 
-    context = {'products' : products, 'item' : item}
+    context = {'products' : products, 'item' : item, 'categories' : categories}
 
     return render(request, 'product.html', context)
 
@@ -171,6 +183,8 @@ def category_page(request, slug, id):
 
     products = Product.objects.filter(category=category)
 
+    categories = Category.objects.all()
+
     if request.user.is_authenticated:
         customer = request.user.customer
         order, created = Order.objects.get_or_create(customer=customer, complete=False)
@@ -181,7 +195,7 @@ def category_page(request, slug, id):
         order = {'get_cart_total' : 0, 'get_cart_items' : 0}
         cartItems = order['get_cart_items']
 
-    context = {'category' : category, 'products': products}
+    context = {'category' : category, 'products': products, 'categories' : categories}
     return render(request, 'category-page.html', context)
 
 def update_item(request):
